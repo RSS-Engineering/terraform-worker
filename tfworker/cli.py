@@ -254,6 +254,8 @@ def version():
 @click.pass_obj
 def terraform(rootc, *args, **kwargs):
     """ execute terraform orchestration """
+    click.secho(os.getcwd())
+    click.secho(str(os.listdir(".")))
     tfc = TerraformCommand(rootc, *args, **kwargs)
 
     click.secho(f"building deployment {kwargs.get('deployment')}", fg="green")

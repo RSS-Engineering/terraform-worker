@@ -108,6 +108,7 @@ class TerraformCommand(BaseCommand):
             )
             # run terraform init
             try:
+
                 self._run(definition, "init", debug=self._show_output)
             except TerraformError:
                 click.secho("error running terraform init", fg="red")
@@ -241,6 +242,10 @@ class TerraformCommand(BaseCommand):
         click.secho(
             f"cmd: {self._terraform_bin} {command} {command_params}", fg="yellow"
         )
+        click.secho(working_dir)
+        click.secho(str(os.listdir(working_dir)))
+        click.secho(os.path.dirname(os.path.dirname(working_dir)))
+        click.secho(str(os.listdir(os.path.dirname(os.path.dirname(working_dir)))))
         (exit_code, stdout, stderr) = pipe_exec(
             f"{self._terraform_bin} {command} {command_params}",
             cwd=working_dir,

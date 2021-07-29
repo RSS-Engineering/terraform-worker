@@ -34,6 +34,7 @@ class RootCommand:
         """Setup state with args that are passed."""
         self.clean = clean
         self.temp_dir = tempfile.mkdtemp()
+        os.environ["WORKER_TEMP_DIR"] = self.temp_dir
         self.args = self.StateArgs()
         self.config_file = args.get("config_file")
 

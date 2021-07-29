@@ -159,6 +159,7 @@ class GitCopier(Copier):
 
         self.make_temp()
         temp_path = f"{self._temp_dir}/{sub_path}"
+        temp_modules_path = f"{self._temp_dir}/terraform-modules"
 
         pipe_exec(
             re.sub(
@@ -179,6 +180,12 @@ class GitCopier(Copier):
             self.repo_clean(f"{temp_path}")
 
         shutil.copytree(temp_path, dest, dirs_exist_ok=True)
+        if os.path.isdir(temp_modules_path):
+            shutil.copytree(
+                self._temp_dir,
+                os.path.dirname(os.path.dirname(dest)),
+                dirs_exist_ok=True,
+            )
         self.clean_temp()
 
     @staticmethod
