@@ -2,7 +2,11 @@
 name = "terraform-worker"
 version = "0.10.9"
 description = "An orchestration tool for Terraform"
-authors = ["Richard Maynard <richard.maynard@objectrocket.com>"]
+authors = [
+    "Richard Maynard <richard.maynard@gmail.com>",
+    "Jesse Wiles <jesse.wiles@gmail.com",
+    "David Grier <seraphin@gmail.com>"
+]
 packages = [
     { include="tfworker", from="." },
 ]
