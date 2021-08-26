@@ -69,7 +69,8 @@ class S3Backend(BaseBackend):
                     "Possibly re-using a bucket name? Bucket names should be globally unique.",
                     fg="red",
                 )
-
+                click.secho(err, fg="red")
+                sys.exit(5)
             if "Not Found" not in err_str:
                 raise err
             if self._authenticator.create_backend_bucket:
@@ -101,7 +102,7 @@ class S3Backend(BaseBackend):
                             fg="red",
                         )
                         click.secho(err, fg="red")
-                        sys.exit(5)
+                        sys.exit(6)
                     elif "BucketAlreadyOwnedByYou" not in err_str:
                         raise err
 
