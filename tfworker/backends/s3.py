@@ -64,6 +64,13 @@ class S3Backend(BaseBackend):
             self._s3_client.head_bucket(Bucket=self._authenticator.bucket)
         except botocore.exceptions.ClientError as err:
             err_str = str(err)
+            if "Forbidden" in err_str:
+                click.secho(
+                    "Possibly re-using a bucket name? Bucket names should be globally unique.",
+                    fg="red",
+                )
+                click.secho(err, fg="red")
+                sys.exit(5)
             if "Not Found" not in err_str:
                 raise err
             if self._authenticator.create_backend_bucket:
@@ -89,6 +96,13 @@ class S3Backend(BaseBackend):
                         if "PYTEST_CURRENT_TEST" not in os.environ:
                             click.secho(err_str, fg="red")
                             sys.exit(4)
+                    elif "conflicting conditional operation" in err_str:
+                        click.secho(
+                            "Possibly a recent bucket delete operation in another account has not completed.",
+                            fg="red",
+                        )
+                        click.secho(err, fg="red")
+                        sys.exit(6)
                     elif "BucketAlreadyOwnedByYou" not in err_str:
                         raise err
 
